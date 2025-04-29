@@ -24,6 +24,7 @@ int main(int argc, char **argv) {
         po::store(po::parse_command_line(argc, argv, desc), vm);
     } catch (const po::error_with_option_name &e) {
         std::cout << e.what() << std::endl;
+        return 1;
     }
     po::notify(vm);
 
