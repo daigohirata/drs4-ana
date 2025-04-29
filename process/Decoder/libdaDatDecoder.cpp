@@ -53,7 +53,7 @@ bool daDatDecoder::ConvertToTree(TTree* tree, const TString& inputFile) {
     }
 
     while (ifs >> eventid >> timestamp >> timestamp_usec) {
-        eventid += eventidOffset;
+        eventid += eventidOffset + 1;
         ifs >> s0 >> s1 >> s2 >> s3 >> s4 >> s5;
         scaler[0] = s0; scaler[1] = s1; scaler[2] = s2;
         scaler[3] = s3; scaler[4] = s4; scaler[5] = s5;
