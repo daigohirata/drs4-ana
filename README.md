@@ -18,8 +18,8 @@ make
 sudo make install
 
 # Add to PATH
-export PATH=/opt/drs4-ana/bin:${PATH}
 # (This command should be added to ~/.zshrc)
+export PATH=/opt/drs4-ana/bin:${PATH}
 ```
 ## Usage
 Use the following command to see help:
