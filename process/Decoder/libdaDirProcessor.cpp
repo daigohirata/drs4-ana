@@ -2,8 +2,10 @@
 // Created by Daigo Hirata on 2025/04/30
 //
 
-#include "daDirProcessor.hpp"
-#include "daDatDecoder.hpp"
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <memory>
 
 #include <TSystemDirectory.h>
 #include <TSystemFile.h>
@@ -12,10 +14,8 @@
 #include <TFile.h>
 #include <TTree.h>
 
-#include <algorithm>
-#include <iostream>
-#include <vector>
-#include <memory>
+#include "daDirProcessor.hpp"
+#include "daDatDecoder.hpp"
 
 daDirProcessor::daDirProcessor(const TString& inputDir, const TString& outputFile)
     : input_dir_(inputDir), output_file_(outputFile) {}

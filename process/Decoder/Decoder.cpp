@@ -2,10 +2,12 @@
 // Created by Daigo Hirata on 2025/04/30
 //
 
-#include "DatDirProcessor.hpp"
-#include "DatFileConverter.hpp"
+#include <iostream>
 
-#include <boost/program_options.hpp>
+#include <program_options.hpp>
+
+#include "daDirProcessor.hpp"
+#include "daDatDecoder.hpp"
 
 namespace po = boost::program_options;
 
@@ -39,6 +41,6 @@ int main(int argc, char **argv) {
     TString inputDir = vm["input-dir"].as<std::string>();
     TString outputFile = vm["output-file"].as<std::string>();
 
-    DatDirProcessor processor(inputDir, outputFile);
+    daDirProcessor processor(inputDir, outputFile);
     return processor.ProcessAll();
 }
