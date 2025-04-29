@@ -14,6 +14,7 @@ set_target_properties(lib${process} PROPERTIES OUTPUT_NAME "${process}")
 # Link with ...
 target_link_libraries(lib${process}
     ${ROOT_LIBRARIES}               # ROOT のライブラリ（Tree, RIO など）
+    ${Boost_PROGRAM_OPTIONS_LIBRARY} # Boost のライブラリ（program_options）
 )
 
 # make the library discoverable from all the programs
