@@ -14,7 +14,7 @@ class daDirProcessor {
   public:
     daDirProcessor(const TString &inputDir,
                    const TString &outputRootFile);
-    void ProcessAll();
+    int ProcessAll() const;
 
   private:
     TString input_dir_;

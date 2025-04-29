@@ -18,13 +18,13 @@
 #include <memory>
 
 daDirProcessor::daDirProcessor(const TString& inputDir, const TString& outputFile)
-    : input_dir_(inputDir), output_dir_(outputFile) {}
+    : input_dir_(inputDir), output_file_(outputFile) {}
 
-int daDirProcessor::ProcessAll() {
+int daDirProcessor::ProcessAll() const {
     TSystemDirectory dir(input_dir_, input_dir_);
     TList* files = dir.GetListOfFiles();
     if (!files) {
-        std::cerr << "Error: Cannot open input directory: " << fInputDir << std::endl;
+        std::cerr << "Error: Cannot open input directory: " << input_dir_ << std::endl;
         return -1;
     }
 
@@ -43,20 +43,19 @@ int daDirProcessor::ProcessAll() {
     // ファイル名を辞書順でソート
     std::sort(datFileNames.begin(), datFileNames.end());
 
-    auto outFile = std::unique_ptr<TFile>(TFile::Open(fOutputFile, "RECREATE"));
+    auto outFile = std::unique_ptr<TFile>(TFile::Open(output_file_, "RECREATE"));
     auto tree = std::make_unique<TTree>("raw", "4 channel raw data");
     
     // datFileNamesの各ファイルを処理
     for (const auto& fileName : datFileNames) {
-        TString filePath = fInputDir + "/" + fileName;
+        TString filePath = input_dir_ + "/" + fileName;
         std::cout << "Processing file: " << fileName << std::endl;
-        daDatDecoder decoder(filePath);
-        if (!decoder.ConvertToTree(tree.get(), filePath)) {
+        if (!daDatDecoder::ConvertToTree(tree.get(), filePath)) {
             std::cerr << "Warning: Failed to process file: " << fileName << std::endl;
         }
     }
 
     tree->Write();
-    std::cout << "Output written to: " << fOutputFile << std::endl;
+    std::cout << "Output written to: " << output_file_ << std::endl;
     return 0;
 }
