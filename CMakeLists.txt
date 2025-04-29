@@ -53,5 +53,4 @@ file(GLOB WAGASCI_CALIBRATION_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hp
 
 
 ############# sub directories #############
-add_subdirectory(src)
 add_subdirectory(process)
