@@ -2,8 +2,10 @@
 Software for DRS4 Evaluation Board data analyses.
 
 ## Installation
+You have to install ROOT before you compile this project.
 ```
 # Install thirdparty
+
 brew install cmake
 brew install boost
 
