@@ -2,16 +2,23 @@
 // Created by Daigo Hirata on 2025/04/30
 //
 
-#ifndef DAT_FILE_CONVERTER_HPP
-#define DAT_FILE_CONVERTER_HPP
+#ifndef DA_DIR_PROCESSOR_HPP
+#define DA_DIR_PROCESSOR_HPP
 
 #include <TString.h>
 
+class TFile;
 class TTree;
 
-class DatFileConverter {
-public:
-    static bool ConvertToTree(TTree* tree, const TString& inputPath, ULong64_t fileIndexOffset);
+class daDirProcessor {
+  public:
+    daDirProcessor(const TString &inputDir,
+                   const TString &outputRootFile);
+    void ProcessAll();
+
+  private:
+    TString input_dir_;
+    TString output_file_;
 };
 
-#endif // DAT_FILE_CONVERTER_HPP
+#endif // DA_DIR_PROCESSOR_HPP

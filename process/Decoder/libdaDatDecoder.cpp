@@ -12,16 +12,16 @@
 #include <TTree.h>
 
 // Project include
-#include "DatFileConverter.hpp"
+#include "daDatDecoder.hpp"
 
-bool DatFileConverter::ConvertToTree(TTree* tree, const TString& inputPath, ULong64_t fileIndexOffset) {
-    std::ifstream ifs(inputPath.Data());
+bool daDatDecoder::ConvertToTree(TTree* tree, const TString& inputFile) {
+    std::ifstream ifs(inputFile.Data());
     if (!ifs.is_open()) {
-        std::cerr << "Error: Cannot open file: " << inputPath << std::endl;
+        std::cerr << "Error: Cannot open file: " << inputFile << std::endl;
         return false;
     }
 
-    // データ構造
+    // data structure
     ULong64_t eventid, timestamp;
     UInt_t timestamp_usec;
     Float_t t1, u1, t2, u2, t3, u3, t4, u4;
@@ -30,19 +30,30 @@ bool DatFileConverter::ConvertToTree(TTree* tree, const TString& inputPath, ULon
     Float_t tbin[4][1024];
     UInt_t scaler[6];
 
+    UInt_t eventidOffset = 0;
     static bool branchesSet = false;
-    if (!branchesSet) {
+    if (branchSet) {
+        tree->SetBranchAddress("eventid", &eventid);
+        tree->SetBranchAddress("timestamp", &timestamp);
+        tree->SetBranchAddress("timestamp_usec", &timestamp_usec);
+        tree->SetBranchAddress("wf", wf);
+        tree->SetBranchAddress("tbin", tbin);
+        tree->SetBranchAddress("scaler", scaler);
+        // Get the last entry to determine the eventid offset
+        tree->GetEntry(tree->GetEntries() - 1);
+        eventidOffset = eventid;
+    } else {
         tree->Branch("eventid", &eventid, "eventid/l");
         tree->Branch("timestamp", &timestamp, "timestamp/l");
         tree->Branch("timestamp_usec", &timestamp_usec, "timestamp_usec/i");
         tree->Branch("wf", wf, "wf[4][1024]/F");
         tree->Branch("tbin", tbin, "tbin[4][1024]/F");
         tree->Branch("scaler", scaler, "scaler[6]/i");
-        branchesSet = true;
+        branchSet = true;
     }
 
     while (ifs >> eventid >> timestamp >> timestamp_usec) {
-        eventid += 10000 * fileIndexOffset;
+        eventid += eventidOffset;
         ifs >> s0 >> s1 >> s2 >> s3 >> s4 >> s5;
         scaler[0] = s0; scaler[1] = s1; scaler[2] = s2;
         scaler[3] = s3; scaler[4] = s4; scaler[5] = s5;

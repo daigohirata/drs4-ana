@@ -2,8 +2,8 @@
 // Created by Daigo Hirata on 2025/04/30
 //
 
-#include "DatDirectoryProcessor.hpp"
-#include "DatFileConverter.hpp"
+#include "daDirProcessor.hpp"
+#include "daDatDecoder.hpp"
 
 #include <TSystemDirectory.h>
 #include <TSystemFile.h>
@@ -17,10 +17,10 @@
 #include <vector>
 #include <memory>
 
-DatDirProcessor::DatDirProcessor(const TString& inputDir, const TString& outputFile)
+daDirProcessor::daDirProcessor(const TString& inputDir, const TString& outputFile)
     : input_dir_(inputDir), output_dir_(outputFile) {}
 
-int DatDirectoryProcessor::ProcessAll() {
+int daDirProcessor::ProcessAll() {
     TSystemDirectory dir(input_dir_, input_dir_);
     TList* files = dir.GetListOfFiles();
     if (!files) {
@@ -30,6 +30,7 @@ int DatDirectoryProcessor::ProcessAll() {
 
     std::vector<TString> datFileNames;
 
+    // ディレクトリ内の .dat ファイルを取得、datFileNamesに格納
     TIter next(files);
     TSystemFile* file;
     while ((file = (TSystemFile*)next())) {
@@ -42,14 +43,15 @@ int DatDirectoryProcessor::ProcessAll() {
     // ファイル名を辞書順でソート
     std::sort(datFileNames.begin(), datFileNames.end());
 
-    TFile outFile = std::unique_ptr<TFile>(TFile::Open(fOutputFile, "RECREATE"));
-    TTree tree = std::make_unique<TTree>("raw", "4 channel waveforms");
-
+    auto outFile = std::unique_ptr<TFile>(TFile::Open(fOutputFile, "RECREATE"));
+    auto tree = std::make_unique<TTree>("raw", "4 channel raw data");
+    
+    // datFileNamesの各ファイルを処理
     for (const auto& fileName : datFileNames) {
         TString filePath = fInputDir + "/" + fileName;
         std::cout << "Processing file: " << fileName << std::endl;
-        DatFileConverter converter(filePath);
-        if (!converter.ConvertToTree(tree.get())) {
+        daDatDecoder decoder(filePath);
+        if (!decoder.ConvertToTree(tree.get(), filePath)) {
             std::cerr << "Warning: Failed to process file: " << fileName << std::endl;
         }
     }
