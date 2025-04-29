@@ -32,10 +32,10 @@ int main(int argc, char **argv) {
         std::cout << desc << "\n";
         return 1;
     } else if (!vm.count("input-dir")) {
-        std::cerr << "Input directory is required." << std::endl;
+        std::cerr << "[Error] Input directory is required." << std::endl;
         return 1;
     } else if (!vm.count("output-file")) {
-        std::cerr << "Output file is required." << std::endl;
+        std::cerr << "[Error] Output file is required." << std::endl;
         return 1;
     };
 
