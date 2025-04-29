@@ -31,7 +31,7 @@ bool daDatDecoder::ConvertToTree(TTree* tree, const TString& inputFile) {
     UInt_t scaler[6];
 
     UInt_t eventidOffset = 0;
-    static bool branchesSet = false;
+    static bool branchSet = false;
     if (branchSet) {
         tree->SetBranchAddress("eventid", &eventid);
         tree->SetBranchAddress("timestamp", &timestamp);
