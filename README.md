@@ -1,2 +1,26 @@
 # drs4-ana
-Tools for DRS4 Evaluation Board data analyses.
+Software for DRS4 Evaluation Board data analyses.
+
+## Installation
+```
+# Install thirdparty
+brew install cmake
+brew install boost
+
+# Compile this project
+git clone https://github.com/daigohirata/drs4-ana ~/drs4-ana
+cd ~/drs4-ana
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/opt/drs4-ana ..
+make 
+make install
+
+# Add to PATH
+export PATH=/opt/drs4-ana/bin:${PATH}
+```
+## Usage
+Use the following command to see help:
+```
+drsDecoder --help
+```
