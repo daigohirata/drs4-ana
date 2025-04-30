@@ -59,6 +59,8 @@ int drsDecoder(const TString& inputDir, const TString& outputFile) {
         auto decoder = std::make_unique<drsDatDecoder>(tree.get(), filePath);
 
         if (decoder->ConvertToTree()) {
+            std::cout << "Successfully decoded file: " << fileName << std::endl;
+        } else {
             std::cerr << "Warning: Failed to decode file: " << fileName << std::endl;
         }
     }
