@@ -7,10 +7,10 @@ set(SOURCES
 add_library(libdrs4ana SHARED ${SOURCES})
 
 # Set the library name (dont use the wrong "liblibwagasci" name)
-set_target_properties(libwagasci PROPERTIES OUTPUT_NAME "drs4ana")
+set_target_properties(libdrs4ana PROPERTIES OUTPUT_NAME "drs4ana")
 
 # Link with libraries
-target_link_libraries(libwagasci ${Boost_LIBRARIES} ${ROOT_LIBRARIES})
+target_link_libraries(libdrs4ana ${Boost_LIBRARIES} ${ROOT_LIBRARIES})
 
 # make the library discoverable from all the programs
 target_include_directories(libdrs4ana PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
