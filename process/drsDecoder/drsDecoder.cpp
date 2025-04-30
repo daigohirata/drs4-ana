@@ -6,8 +6,7 @@
 
 #include <boost/program_options.hpp>
 
-#include "daDirProcessor.hpp"
-#include "daDatDecoder.hpp"
+#include "drsDecoder.hpp"
 
 namespace po = boost::program_options;
 
@@ -42,6 +41,11 @@ int main(int argc, char **argv) {
     TString inputDir = vm["input-dir"].as<std::string>();
     TString outputFile = vm["output-file"].as<std::string>();
 
-    daDirProcessor processor(inputDir, outputFile);
-    return processor.ProcessAll();
+    if(drsDecoder(inputDir, outputFile)){
+        std::cerr << "[Error] Failed to process files." << std::endl;
+        return 1;
+    } else {
+        std::cout << "***** drsDecoder exits successfully. ******" << std::endl;
+        return 0;
+    }
 }

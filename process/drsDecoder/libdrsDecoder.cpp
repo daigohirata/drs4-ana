@@ -2,6 +2,9 @@
 // Created by Daigo Hirata on 2025/04/30
 //
 
+#ifndef DRS_DECODER_HPP
+#define DRS_DECODER_HPP
+
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -14,17 +17,19 @@
 #include <TFile.h>
 #include <TTree.h>
 
-#include "daDirProcessor.hpp"
-#include "daDatDecoder.hpp"
+#include "drsDecoder.hpp"
+#include "drsDatDecoder.hpp"
 
-daDirProcessor::daDirProcessor(const TString& inputDir, const TString& outputFile)
-    : input_dir_(inputDir), output_file_(outputFile) {}
+#define N_CHANNEL 4
+#define N_SAMPLES 1024
+#define N_SCALER 6
 
-int daDirProcessor::ProcessAll() const {
-    TSystemDirectory dir(input_dir_, input_dir_);
+
+int drsDecoder(const TString& inputDir, const TString& outputFile) {
+    TSystemDirectory dir(inputDir, inputDir);
     TList* files = dir.GetListOfFiles();
     if (!files) {
-        std::cerr << "Error: Cannot open input directory: " << input_dir_ << std::endl;
+        std::cerr << "Error: Cannot open input directory: " << inputDir << std::endl;
         return -1;
     }
 
@@ -43,19 +48,25 @@ int daDirProcessor::ProcessAll() const {
     // ファイル名を辞書順でソート
     std::sort(datFileNames.begin(), datFileNames.end());
 
-    auto outFile = std::unique_ptr<TFile>(TFile::Open(output_file_, "RECREATE"));
+    auto outFile = std::unique_ptr<TFile>(TFile::Open(outputFile, "RECREATE"));
     auto tree = std::make_unique<TTree>("raw", "4 channel raw data");
     
     // datFileNamesの各ファイルを処理
     for (const auto& fileName : datFileNames) {
-        TString filePath = input_dir_ + "/" + fileName;
+        TString filePath = inputDir + "/" + fileName;
         std::cout << "Processing file: " << fileName << std::endl;
-        if (!daDatDecoder::ConvertToTree(tree.get(), filePath)) {
-            std::cerr << "Warning: Failed to process file: " << fileName << std::endl;
+
+        auto decoder = std::make_unique<drsDatDecoder>(tree.get(), filePath);
+
+        if (decoder->ConvertToTree()) {
+            std::cerr << "Warning: Failed to decode file: " << fileName << std::endl;
         }
     }
 
     tree->Write();
-    std::cout << "Output written to: " << output_file_ << std::endl;
+    std::cout << "Decoded data is written to: " << outputFile << std::endl;
+
     return 0;
 }
+
+#endif // DRS_DECODER_HPP

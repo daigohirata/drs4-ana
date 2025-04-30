@@ -8,13 +8,14 @@ set(process drsDecoder)
 
 ##### Decoder
 
-add_library(lib${process} SHARED libdaDatDecoder.cpp libdaDirProcessor.cpp)
+add_library(lib${process} SHARED lib${process}.cpp)
 set_target_properties(lib${process} PROPERTIES OUTPUT_NAME "${process}")
 
 # Link with ...
 target_link_libraries(lib${process}
-    ${ROOT_LIBRARIES}               # ROOT のライブラリ（Tree, RIO など）
+    ${ROOT_LIBRARIES}                # ROOT のライブラリ（Tree, RIO など）
     ${Boost_PROGRAM_OPTIONS_LIBRARY} # Boost のライブラリ（program_options）
+    libdrs4ana                       # libdrs4ana ライブラリ
 )
 
 # make the library discoverable from all the programs
