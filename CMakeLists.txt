@@ -53,4 +53,5 @@ file(GLOB DRS4_ANA_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
 
 
 ############# sub directories #############
+add_subdirectory(src)
 add_subdirectory(process)
