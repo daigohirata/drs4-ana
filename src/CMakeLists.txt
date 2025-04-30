@@ -22,16 +22,3 @@ set_target_properties(libdrs4ana PROPERTIES PUBLIC_HEADER "${DRS4_ANA_INCLUDES}"
 install(TARGETS libdrs4ana
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
-
-# Enable @rpath support on macOS
-set(CMAKE_MACOSX_RPATH ON)
-
-# Set install RPATH so Decoder can find libDecoder.dylib in ../lib
-set_target_properties(libdrs4ana PROPERTIES
-    INSTALL_RPATH "@executable_path/../lib"
-)
-
-# Also set RPATH for the shared library itself
-set_target_properties(libdrs4ana PROPERTIES
-    INSTALL_RPATH "@loader_path"
-)

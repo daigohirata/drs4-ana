@@ -44,7 +44,7 @@ set(CMAKE_MACOSX_RPATH ON)
 
 # Set install RPATH so Decoder can find libDecoder.dylib in ../lib
 set_target_properties(${process} PROPERTIES
-    INSTALL_RPATH "@executable_path/../lib"
+    INSTALL_RPATH "@executable_path/../lib;@executable_path/../lib/drs4-ana"
 )
 
 # Also set RPATH for the shared library itself
