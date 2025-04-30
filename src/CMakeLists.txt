@@ -16,7 +16,7 @@ target_link_libraries(libdrs4ana ${Boost_LIBRARIES} ${ROOT_LIBRARIES})
 target_include_directories(libdrs4ana PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # list all target headers
-set_target_properties(libwagasci PROPERTIES PUBLIC_HEADER "${DRS4_ANA_INCLUDES}")
+set_target_properties(libdrs4ana PROPERTIES PUBLIC_HEADER "${DRS4_ANA_INCLUDES}")
 
 # install the library in the lib folder
 install(TARGETS libdrs4ana
