@@ -11,8 +11,8 @@ brew install boost
 # Compile this project
 git clone https://github.com/daigohirata/drs4-ana ~/drs4-ana
 cd ~/drs4-ana
-mkdir build
-cd build
+mkdir ~/drs4-ana/build
+cd ~/drs4-ana/build
 cmake -DCMAKE_INSTALL_PREFIX=/opt/drs4-ana ..
 make 
 sudo make install
