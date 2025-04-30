@@ -5,8 +5,11 @@
 #include <iostream>
 #include <vector>
 
+#include <TString.h>
 #include <boost/program_options.hpp>
 
+#include "drsConst.hpp"
+#include "drsWFDrawer.hpp"
 
 namespace po = boost::program_options;
 
@@ -59,12 +62,20 @@ int main(int argc, char **argv) {
 
     // analyse channel number
     std::string chstr = vm["channel"].as<std::string>();  // 例: "1101"
-    std::vector<bool> channel(4, true);  // CH1〜CH4（index 0〜3）
+    std::vector<bool> drawChannel(N_CHANNEL, true);  // CH1〜CH4（index 0〜3）
     int len = chstr.size();
     for (int i = 0; i < 4 && i < len; ++i) {
-        channel[i] = (chstr[i] == '1');
+        drawChannel[i] = (chstr[i] == '1');
     }
 
+    if (drsWFDrawer(inputFile, outputFile, eventId, drawChannel, branchName,
+                    verticalScale, horizontalScale, outputFormat)) {
+        std::cout << "[Info] Waveform " << eventId << " drawing completed." << std::endl;
+        return 0;
+    } else {
+        std::cerr << "[Error] Failed to draw waveform." << std::endl;
+        return 1;
+    }
 
     return 0;
 }

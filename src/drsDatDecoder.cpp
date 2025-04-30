@@ -12,6 +12,7 @@
 #include <TTree.h>
 
 // Project include
+#include "drsConst.hpp"
 #include "drsDecoder.hpp"
 #include "drsDatDecoder.hpp"
 
