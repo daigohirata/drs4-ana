@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
         "event-id,e", po::value<int>()->default_value(0), "Event ID to draw waveform")(
         "channel,c", po::value<int>()->default_value(1111), "Channel number to draw waveform (default : 1111)\n"
                                        "--Example \"-c 1011\" if you want to draw CH1,3,4")(
-        "branch-name,b", po::value<std::string>()->default_value("wf"), "Branch name (default : wf)")(
+        "branch-name,b", po::value<std::string>()->default_value(RAW_WAVEFORM_NAME), "Branch name (default : wf)")(
         "vertical-scale,v", po::value<double>(), "Vertical scale [mV]\n"
                                                  "--Example \"--vertical-scale -350:-5\"")(
         "horizontal-scale,h", po::value<double>(), "Horizontal scale [ns]\n"
@@ -59,6 +59,16 @@ int main(int argc, char **argv) {
     TString verticalScale = vm["vertical-scale"].as<std::string>();
     TString horizontalScale = vm["horizontal-scale"].as<std::string>();
     TString outputFormat = vm["output-format"].as<std::string>();
+
+    // Check if the input file exists
+    if (!inputFile.EndsWith(".root")) {
+        std::cerr << "Error: Input file must be a .root file." << std::endl;
+        return false;
+    }
+    if (!outputFile.EndsWith(".pdf") && !outputFile.EndsWith(".png")) {
+        std::cerr << "Error: Output file must be a .pdf or .png file." << std::endl;
+        return false;
+    }
 
     // analyse channel number
     std::string chstr = vm["channel"].as<std::string>();  // 例: "1101"
