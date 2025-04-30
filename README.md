@@ -20,6 +20,11 @@ sudo make install
 # (This command should be added to ~/.zshrc)
 export PATH="/opt/drs4-ana/bin:${PATH}"
 ```
+## Uninstallation
+```
+rm -rf ~/drs4-ana
+sudo rm -rf /opt/drs4-ana
+```
 ## Usage
 Use the following command to see help:
 ```
