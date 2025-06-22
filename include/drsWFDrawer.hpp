@@ -10,12 +10,12 @@
 #include <TString.h>
 
 bool drsWFDrawer(const TString& inputFile,
-                const TString& outputFile,
-                const int eventId,
-                const std::vector<bool>& drawChannel,
-                const TString& branchName,
-                const TString& verticalScale,
-                const TString& horizontalScale,
-                const TString& outputFormat);
+                 const TString& outputFile,
+                 const int eventId,
+                 const std::vector<bool>& drawChannel,
+                 const TString& branchName,
+                 const TString& verticalScale,
+                 const TString& horizontalScale,
+                 const TString& outputFormat);
 
 #endif // DRS_WF_DRAER_HPP

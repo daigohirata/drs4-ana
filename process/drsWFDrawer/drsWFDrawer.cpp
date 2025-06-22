@@ -62,11 +62,11 @@ int main(int argc, char **argv) {
 
     // Check if the input file exists
     if (!inputFile.EndsWith(".root")) {
-        std::cerr << "Error: Input file must be a .root file." << std::endl;
+        std::cerr << "[Error] Input file must be a .root file." << std::endl;
         return false;
     }
     if (!outputFile.EndsWith(".pdf") && !outputFile.EndsWith(".png")) {
-        std::cerr << "Error: Output file must be a .pdf or .png file." << std::endl;
+        std::cerr << "[Error] Output file must be a .pdf or .png file." << std::endl;
         return false;
     }
 
